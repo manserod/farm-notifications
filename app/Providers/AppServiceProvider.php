@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\MailerProviders\SmtpProvider;
+use App\Http\Services\NotificationService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // NotificationService register
+        $this->app->bind(NotificationService::class, function() {
+            return new NotificationService(new SmtpProvider());
+        });
     }
 
     /**
